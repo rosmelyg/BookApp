@@ -1,0 +1,32 @@
+<div class="row justify-content-center mt-4">
+    <div class="col-lg-5 col-md-7 text-center">
+        <div class="card shadow-lg p-4 p-md-5 border-emerald" style="border-top: 4px solid #ef4444 !important;">
+            <div class="mb-3">
+                <span class="d-inline-flex align-items-center justify-content-center rounded-circle p-3" style="background-color: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3);">
+                    <i class="bi bi-exclamation-triangle-fill text-danger fs-1"></i>
+                </span>
+            </div>
+            
+            <h3 class="fw-bold text-white mb-2">Eliminar Categoría</h3>
+            <p class="text-secondary mb-3">¿Está seguro que desea eliminar permanentemente esta categoría del sistema?</p>
+            
+            <div class="card p-3 mb-4 border-emerald" style="background-color: var(--input-bg);">
+                <div class="text-secondary small mb-1">Categoría a eliminar:</div>
+                <div class="text-emerald fw-bold fs-5">"{{categoria.nombre}}"</div>
+            </div>
+
+            <p class="text-warning small mb-4">
+                <i class="bi bi-info-circle me-1"></i> Esta acción no se puede deshacer.
+            </p>
+            
+            <form action="/categorias/delete/{{categoria.id}}" method="POST" class="d-flex justify-content-center gap-3">
+                <a href="/categorias" class="btn btn-secondary px-4">
+                    <i class="bi bi-x-lg me-1"></i> Cancelar
+                </a>
+                <button type="submit" class="btn btn-danger px-4">
+                    <i class="bi bi-trash3-fill me-1"></i> Confirmar Eliminación
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookApp - Gestión Bibliográfica</title>
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5.3.3 & Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --bg-app: #060908;
+            --bg-surface: #0a110d;
+            --card-bg: #0f1d16;
+            --card-bg-gradient: linear-gradient(155deg, #11231a 0%, #0c1611 100%);
+            --card-border: #1a382a;
+            --card-border-hover: #2e684d;
+            --card-header: #142a1f;
+            --accent-emerald: #10b981;
+            --accent-emerald-hover: #059669;
+            --accent-emerald-light: #34d399;
+            --accent-emerald-subtle: rgba(16, 185, 129, 0.12);
+            --accent-emerald-border: rgba(52, 211, 153, 0.25);
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --input-bg: #08120d;
+            --input-border: #1a3629;
+            --input-focus-border: #10b981;
+            --table-bg: #0c1812;
+            --table-header-bg: #13261d;
+            --table-row-hover: #162b21;
+        }
+
+        body {
+            background-color: var(--bg-app) !important;
+            color: var(--text-primary) !important;
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            letter-spacing: -0.01em;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #060908;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1a382a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2e684d;
+        }
+
+        /* Navbar */
+        .navbar-bookapp {
+            background: rgba(6, 9, 8, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--accent-emerald-border);
+        }
+        .navbar-bookapp .navbar-brand {
+            color: #ffffff;
+            font-size: 1.35rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .navbar-bookapp .navbar-brand i {
+            color: var(--accent-emerald-light);
+            filter: drop-shadow(0 0 8px rgba(52, 211, 153, 0.5));
+        }
+        .navbar-bookapp .nav-link {
+            color: var(--text-secondary);
+            font-weight: 500;
+            padding: 0.5rem 0.9rem !important;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        .navbar-bookapp .nav-link:hover {
+            color: var(--accent-emerald-light);
+            background: var(--accent-emerald-subtle);
+        }
+        .navbar-toggler {
+            border-color: var(--card-border);
+            color: var(--text-secondary);
+        }
+        .navbar-toggler:focus {
+            box-shadow: 0 0 0 0.2rem var(--accent-emerald-subtle);
+        }
+
+        /* Cards & Containers */
+        .card, .bookapp-card {
+            background: var(--card-bg-gradient);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            color: var(--text-primary);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+        .card-header {
+            background: var(--card-header);
+            border-bottom: 1px solid var(--card-border);
+            color: var(--accent-emerald-light);
+            font-weight: 600;
+        }
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Card hover animation for books */
+        .book-card {
+            overflow: hidden;
+            background: var(--card-bg-gradient);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+        .book-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--card-border-hover);
+            box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.8), 0 0 20px rgba(16, 185, 129, 0.15);
+        }
+        .book-card .card-img-top {
+            transition: transform 0.3s ease;
+        }
+        .book-card:hover .card-img-top {
+            transform: scale(1.03);
+        }
+
+        /* Forms & Inputs */
+        .form-label {
+            color: #a7f3d0;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 0.35rem;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+        .form-control, .form-select {
+            background-color: var(--input-bg);
+            border: 1px solid var(--input-border);
+            color: #ffffff;
+            border-radius: 9px;
+            padding: 0.65rem 0.95rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+        .form-control:focus, .form-select:focus {
+            background-color: #0c1a13;
+            border-color: var(--input-focus-border);
+            box-shadow: 0 0 0 0.25rem rgba(16, 185, 129, 0.22);
+            color: #ffffff;
+        }
+        .form-control::placeholder {
+            color: #64748b;
+        }
+        .form-select option {
+            background-color: #0c1a13;
+            color: #ffffff;
+        }
+        .form-check-input {
+            background-color: var(--input-bg);
+            border-color: var(--input-border);
+        }
+        .form-check-input:checked {
+            background-color: var(--accent-emerald);
+            border-color: var(--accent-emerald);
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+        }
+        .form-check-input:focus {
+            border-color: var(--accent-emerald);
+            box-shadow: 0 0 0 0.2rem rgba(16, 185, 129, 0.25);
+        }
+        .form-check-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        /* TABLE OVERRIDES (Bootstrap 5 Dark Green Theme) */
+        .table-container {
+            background: #0c1812 !important;
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
+        }
+        .table {
+            --bs-table-bg: #0c1812 !important;
+            --bs-table-color: #f8fafc !important;
+            --bs-table-border-color: #1a382a !important;
+            --bs-table-hover-bg: #162b21 !important;
+            --bs-table-hover-color: #ffffff !important;
+            --bs-table-accent-bg: #0c1812 !important;
+            --bs-table-striped-bg: #0f1f18 !important;
+            --bs-table-striped-color: #f8fafc !important;
+            --bs-table-active-bg: #162b21 !important;
+            --bs-table-active-color: #ffffff !important;
+            color: #f8fafc !important;
+            margin-bottom: 0 !important;
+            border-color: #1a382a !important;
+            background-color: #0c1812 !important;
+        }
+        .table > :not(caption) > * > * {
+            background-color: #0c1812 !important;
+            color: #f8fafc !important;
+            box-shadow: inset 0 0 0 9999px #0c1812 !important;
+            border-bottom: 1px solid rgba(52, 211, 153, 0.12) !important;
+            padding: 0.95rem 1rem !important;
+            vertical-align: middle !important;
+        }
+        .table thead th,
+        .table thead > tr > th {
+            background-color: #13261d !important;
+            box-shadow: inset 0 0 0 9999px #13261d !important;
+            color: #34d399 !important;
+            font-weight: 700 !important;
+            font-size: 0.8rem !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.05em !important;
+            padding: 1rem !important;
+            border-bottom: 2px solid #1a382a !important;
+            vertical-align: middle !important;
+        }
+        .table tbody tr {
+            background-color: #0c1812 !important;
+            transition: background-color 0.15s ease;
+        }
+        .table tbody tr:hover > * {
+            background-color: #162b21 !important;
+            box-shadow: inset 0 0 0 9999px #162b21 !important;
+            color: #ffffff !important;
+        }
+        .table tbody td {
+            color: #cbd5e1 !important;
+        }
+        .table tbody td .table-title-main {
+            color: #ffffff !important;
+            font-weight: 700 !important;
+            font-size: 0.975rem !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+            display: inline-block;
+        }
+
+        /* Buttons */
+        .btn {
+            border-radius: 8px;
+            font-weight: 600;
+            padding: 0.55rem 1.15rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.45rem;
+            transition: all 0.2s ease;
+        }
+        .btn-success, .btn-emerald {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border: 1px solid #10b981;
+            color: #ffffff !important;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+        }
+        .btn-success:hover, .btn-emerald:hover {
+            background: linear-gradient(135deg, #34d399 0%, #059669 100%);
+            border-color: #34d399;
+            color: #ffffff !important;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            border: 1px solid #059669;
+            color: #ffffff !important;
+            box-shadow: 0 4px 14px rgba(5, 150, 105, 0.3);
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+            border-color: #10b981;
+            color: #ffffff !important;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+        .btn-secondary {
+            background-color: #15271e;
+            border: 1px solid #234737;
+            color: var(--text-secondary) !important;
+        }
+        .btn-secondary:hover {
+            background-color: #1e3a2d;
+            border-color: var(--accent-emerald-light);
+            color: #ffffff !important;
+            transform: translateY(-1px);
+        }
+        .btn-outline-secondary {
+            border-color: #2b5440;
+            color: var(--text-secondary) !important;
+            background-color: transparent;
+        }
+        .btn-outline-secondary:hover {
+            background-color: #162b20;
+            border-color: var(--accent-emerald-light);
+            color: #ffffff !important;
+        }
+        .btn-warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            border: none;
+            color: #0b1510 !important;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+        .btn-warning:hover {
+            background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(245, 158, 11, 0.45);
+        }
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            border: none;
+            color: #ffffff !important;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #f87171 0%, #dc2626 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(239, 68, 68, 0.45);
+        }
+        .btn-outline-emerald, .btn-outline-dark {
+            background: transparent;
+            border: 1px solid var(--accent-emerald-light);
+            color: var(--accent-emerald-light) !important;
+        }
+        .btn-outline-emerald:hover, .btn-outline-dark:hover {
+            background: var(--accent-emerald);
+            border-color: var(--accent-emerald);
+            color: #060908 !important;
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Badges */
+        .badge-emerald {
+            background-color: var(--accent-emerald-subtle) !important;
+            color: var(--accent-emerald-light) !important;
+            border: 1px solid var(--accent-emerald-border) !important;
+            font-weight: 600;
+        }
+
+        /* Alerts */
+        .alert {
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            font-weight: 500;
+        }
+        .alert-warning {
+            background-color: #211909 !important;
+            border: 1px solid #78350f !important;
+            color: #fef3c7 !important;
+        }
+        .alert-danger {
+            background-color: #260d10 !important;
+            border: 1px solid #7f1d1d !important;
+            color: #fee2e2 !important;
+        }
+        .alert-success {
+            background-color: #082115 !important;
+            border: 1px solid #065f46 !important;
+            color: #d1fae5 !important;
+        }
+
+        /* Helpers */
+        .text-emerald {
+            color: var(--accent-emerald-light) !important;
+        }
+        .text-emerald-muted {
+            color: #86efac !important;
+        }
+        .border-emerald {
+            border-color: var(--card-border) !important;
+        }
+        .bg-dark-emerald {
+            background-color: var(--card-bg) !important;
+        }
+        .footer-bookapp {
+            background: #050807;
+            border-top: 1px solid rgba(52, 211, 153, 0.12);
+            color: #64748b;
+            font-size: 0.85rem;
+            margin-top: auto;
+            padding: 1.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-bookapp shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">
+                <i class="bi bi-book-half"></i> BookApp
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/"><i class="bi bi-house-door me-1"></i> Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/libros"><i class="bi bi-journal-bookmark me-1"></i> Libros</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/categorias"><i class="bi bi-tags me-1"></i> Categorías</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/autores"><i class="bi bi-people me-1"></i> Autores</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/editoriales"><i class="bi bi-building me-1"></i> Editoriales</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-4 flex-grow-1">
+        {{{body}}}
+    </main>
+
+    <footer class="footer-bookapp text-center">
+        <div class="container">
+            <p class="mb-0">
+                <i class="bi bi-book text-emerald me-1"></i> <strong>BookApp</strong> &copy; 2026 &bull; Sistema de Gestión Bibliográfica ITLA
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

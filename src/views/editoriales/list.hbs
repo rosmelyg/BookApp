@@ -1,0 +1,104 @@
+<style>
+    /* Reglas estrictas de contraste para la tabla de editoriales */
+    .table-container,
+    .table-container .table,
+    .table-container .table > :not(caption) > * > * {
+        background-color: #0c1812 !important;
+        box-shadow: inset 0 0 0 9999px #0c1812 !important;
+        color: #f8fafc !important;
+    }
+    .table-container .table thead th {
+        background-color: #13261d !important;
+        box-shadow: inset 0 0 0 9999px #13261d !important;
+        color: #34d399 !important;
+    }
+    .table-container .table tbody tr:hover > * {
+        background-color: #162b21 !important;
+        box-shadow: inset 0 0 0 9999px #162b21 !important;
+    }
+    .table-editorial-nombre {
+        color: #ffffff !important;
+        font-weight: 700 !important;
+        font-size: 1.05rem !important;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+        display: inline-block;
+        letter-spacing: -0.01em;
+    }
+</style>
+
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-2 border-bottom border-emerald gap-3">
+    <div>
+        <h1 class="h2 fw-bold text-white mb-1">
+            <i class="bi bi-building-fill text-emerald me-2"></i>Mantenimiento de Editoriales
+        </h1>
+        <p class="text-secondary small mb-0">Gestiona las casas editoriales y su información de procedencia y contacto</p>
+    </div>
+    <a href="/editoriales/create" class="btn btn-emerald px-4 py-2">
+        <i class="bi bi-plus-circle-fill me-1"></i> Nueva Editorial
+    </a>
+</div>
+
+<div class="table-container border-emerald shadow-lg">
+    <div class="table-responsive">
+        <table class="table align-middle m-0" style="background-color: #0c1812 !important;">
+            <thead>
+                <tr>
+                    <th scope="col" style="min-width: 220px; background-color: #13261d !important; color: #34d399 !important;">Nombre de la Editorial</th>
+                    <th scope="col" style="background-color: #13261d !important; color: #34d399 !important;">Teléfono</th>
+                    <th scope="col" style="background-color: #13261d !important; color: #34d399 !important;">País</th>
+                    <th scope="col" class="text-center" style="width: 220px; background-color: #13261d !important; color: #34d399 !important;">Libros Asociados</th>
+                    <th scope="col" class="text-center" style="min-width: 170px; background-color: #13261d !important; color: #34d399 !important;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each editoriales}}
+                <tr style="background-color: #0c1812 !important;">
+                    <td style="background-color: #0c1812 !important;">
+                        <span class="table-editorial-nombre">
+                            <i class="bi bi-building text-emerald me-2"></i>{{this.nombre}}
+                        </span>
+                    </td>
+                    <td style="background-color: #0c1812 !important;">
+                        <span class="text-light">
+                            <i class="bi bi-telephone-fill text-emerald me-1 small"></i>{{this.telefono}}
+                        </span>
+                    </td>
+                    <td style="background-color: #0c1812 !important;">
+                        <span class="badge bg-dark border border-secondary text-secondary">
+                            <i class="bi bi-geo-alt-fill text-emerald me-1"></i>{{this.pais}}
+                        </span>
+                    </td>
+                    <td class="text-center" style="background-color: #0c1812 !important;">
+                        <span class="badge badge-emerald fs-6 px-3 py-1">
+                            <i class="bi bi-book me-1"></i>{{this.cantidadLibros}}
+                        </span>
+                    </td>
+                    <td class="text-center" style="background-color: #0c1812 !important;">
+                        <div class="d-inline-flex gap-1">
+                            <a href="/editoriales/edit/{{this.id}}" class="btn btn-sm btn-warning" title="Editar Editorial">
+                                <i class="bi bi-pencil-fill me-1"></i> Editar
+                            </a>
+                            <a href="/editoriales/delete/{{this.id}}" class="btn btn-sm btn-danger" title="Eliminar Editorial">
+                                <i class="bi bi-trash3-fill me-1"></i> Eliminar
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {{else}}
+                <tr style="background-color: #0c1812 !important;">
+                    <td colspan="5" class="text-center py-5" style="background-color: #0c1812 !important;">
+                        <div class="py-3">
+                            <i class="bi bi-building-x text-emerald fs-1 d-block mb-2"></i>
+                            <h5 class="text-white fw-semibold mb-1">No hay editoriales registradas</h5>
+                            <p class="text-muted small mb-3">Comienza creando el perfil de la primera editorial.</p>
+                            <a href="/editoriales/create" class="btn btn-emerald btn-sm">
+                                <i class="bi bi-plus-lg me-1"></i> Crear primera editorial
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>

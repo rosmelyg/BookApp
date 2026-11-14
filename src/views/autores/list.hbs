@@ -1,0 +1,98 @@
+<style>
+    /* Reglas estrictas de contraste para la tabla de autores */
+    .table-container,
+    .table-container .table,
+    .table-container .table > :not(caption) > * > * {
+        background-color: #0c1812 !important;
+        box-shadow: inset 0 0 0 9999px #0c1812 !important;
+        color: #f8fafc !important;
+    }
+    .table-container .table thead th {
+        background-color: #13261d !important;
+        box-shadow: inset 0 0 0 9999px #13261d !important;
+        color: #34d399 !important;
+    }
+    .table-container .table tbody tr:hover > * {
+        background-color: #162b21 !important;
+        box-shadow: inset 0 0 0 9999px #162b21 !important;
+    }
+    .table-autor-nombre {
+        color: #ffffff !important;
+        font-weight: 700 !important;
+        font-size: 1.05rem !important;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+        display: inline-block;
+        letter-spacing: -0.01em;
+    }
+</style>
+
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-2 border-bottom border-emerald gap-3">
+    <div>
+        <h1 class="h2 fw-bold text-white mb-1">
+            <i class="bi bi-people-fill text-emerald me-2"></i>Mantenimiento de Autores
+        </h1>
+        <p class="text-secondary small mb-0">Gestiona los autores y creadores de las obras registradas</p>
+    </div>
+    <a href="/autores/create" class="btn btn-emerald px-4 py-2">
+        <i class="bi bi-plus-circle-fill me-1"></i> Nuevo Autor
+    </a>
+</div>
+
+<div class="table-container border-emerald shadow-lg">
+    <div class="table-responsive">
+        <table class="table align-middle m-0" style="background-color: #0c1812 !important;">
+            <thead>
+                <tr>
+                    <th scope="col" style="min-width: 220px; background-color: #13261d !important; color: #34d399 !important;">Nombre del Autor</th>
+                    <th scope="col" style="background-color: #13261d !important; color: #34d399 !important;">Correo Electrónico</th>
+                    <th scope="col" class="text-center" style="width: 220px; background-color: #13261d !important; color: #34d399 !important;">Libros Asociados</th>
+                    <th scope="col" class="text-center" style="min-width: 170px; background-color: #13261d !important; color: #34d399 !important;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each autores}}
+                <tr style="background-color: #0c1812 !important;">
+                    <td style="background-color: #0c1812 !important;">
+                        <span class="table-autor-nombre">
+                            <i class="bi bi-person-circle text-emerald me-2"></i>{{this.nombre}}
+                        </span>
+                    </td>
+                    <td style="background-color: #0c1812 !important;">
+                        <a href="mailto:{{this.correo}}" class="text-light text-decoration-none" style="color: #cbd5e1 !important;">
+                            <i class="bi bi-envelope text-emerald me-1"></i>{{this.correo}}
+                        </a>
+                    </td>
+                    <td class="text-center" style="background-color: #0c1812 !important;">
+                        <span class="badge badge-emerald fs-6 px-3 py-1">
+                            <i class="bi bi-book me-1"></i>{{this.cantidadLibros}}
+                        </span>
+                    </td>
+                    <td class="text-center" style="background-color: #0c1812 !important;">
+                        <div class="d-inline-flex gap-1">
+                            <a href="/autores/edit/{{this.id}}" class="btn btn-sm btn-warning" title="Editar Autor">
+                                <i class="bi bi-pencil-fill me-1"></i> Editar
+                            </a>
+                            <a href="/autores/delete/{{this.id}}" class="btn btn-sm btn-danger" title="Eliminar Autor">
+                                <i class="bi bi-trash3-fill me-1"></i> Eliminar
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {{else}}
+                <tr style="background-color: #0c1812 !important;">
+                    <td colspan="4" class="text-center py-5" style="background-color: #0c1812 !important;">
+                        <div class="py-3">
+                            <i class="bi bi-person-x text-emerald fs-1 d-block mb-2"></i>
+                            <h5 class="text-white fw-semibold mb-1">No hay autores registrados</h5>
+                            <p class="text-muted small mb-3">Comienza creando el perfil del primer autor.</p>
+                            <a href="/autores/create" class="btn btn-emerald btn-sm">
+                                <i class="bi bi-plus-lg me-1"></i> Crear primer autor
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>

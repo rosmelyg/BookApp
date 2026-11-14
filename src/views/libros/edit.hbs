@@ -1,0 +1,120 @@
+<div class="row justify-content-center">
+    <div class="col-lg-7 col-md-9">
+        <div class="card shadow-lg border-emerald">
+            <div class="card-header border-emerald py-3">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-pencil-square text-emerald fs-4 me-2"></i>
+                    <div>
+                        <h4 class="fw-bold text-white mb-0">Editar Libro</h4>
+                        <span class="text-secondary small">Modifica los detalles del libro seleccionado</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body p-4">
+                {{#if noPuedeEditar}}
+                    <div class="alert alert-warning mb-4 d-flex align-items-center" role="alert">
+                        <i class="bi bi-exclamation-triangle-fill fs-3 me-3 text-warning"></i>
+                        <div>
+                            <strong>No se puede editar:</strong> {{mensajeBloqueo}}
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <a href="/libros" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left me-1"></i> Volver a la lista
+                        </a>
+                    </div>
+                {{else}}
+                    {{#if error}}
+                        <div class="alert alert-danger mb-4 d-flex align-items-center" role="alert">
+                            <i class="bi bi-x-circle-fill fs-4 me-2"></i>
+                            <div>{{error}}</div>
+                        </div>
+                    {{/if}}
+
+                    <form action="/libros/edit/{{libro.id}}" method="POST">
+                        <div class="mb-3">
+                            <label for="titulo" class="form-label">
+                                <i class="bi bi-type text-emerald"></i> Título del Libro
+                            </label>
+                            <input type="text" class="form-control" id="titulo" name="titulo" value="{{libro.titulo}}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="portadaUrl" class="form-label">
+                                <i class="bi bi-image text-emerald"></i> Nueva URL de la Portada
+                            </label>
+                            <input type="url" class="form-control" id="portadaUrl" name="portadaUrl" value="{{libro.portadaUrl}}" placeholder="Dejar en blanco para conservar la portada actual">
+                        </div>
+
+                        {{#if libro.portadaUrl}}
+                        <div class="mb-3 p-3 rounded border border-emerald" style="background-color: var(--input-bg);">
+                            <label class="form-label mb-2">
+                                <i class="bi bi-eye text-emerald"></i> Vista previa de la portada actual:
+                            </label>
+                            <div class="d-flex align-items-center gap-3">
+                                <img src="{{libro.portadaUrl}}" alt="{{libro.titulo}}" class="rounded border border-emerald shadow-sm" style="max-height: 140px; width: 100px; object-fit: cover;">
+                                <div class="text-secondary small">
+                                    <p class="mb-1 text-white fw-semibold">{{libro.titulo}}</p>
+                                    <p class="text-muted mb-0">Si no deseas cambiar la imagen, no modifiques el campo de la URL.</p>
+                                </div>
+                            </div>
+                        </div>
+                        {{/if}}
+
+                        <div class="mb-3">
+                            <label for="anoPublicacion" class="form-label">
+                                <i class="bi bi-calendar-event text-emerald"></i> Año de Publicación
+                            </label>
+                            <input type="number" class="form-control" id="anoPublicacion" name="anoPublicacion" value="{{libro.anoPublicacion}}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="categoriaId" class="form-label">
+                                <i class="bi bi-tag text-emerald"></i> Categoría
+                            </label>
+                            <select class="form-select" id="categoriaId" name="categoriaId" required>
+                                <option value="">-- Seleccione una categoría --</option>
+                                {{#each categorias}}
+                                    <option value="{{this.id}}" {{#eq this.id ../libro.categoriaId}}selected{{/eq}}>{{this.nombre}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="autorId" class="form-label">
+                                <i class="bi bi-person text-emerald"></i> Autor
+                            </label>
+                            <select class="form-select" id="autorId" name="autorId" required>
+                                <option value="">-- Seleccione un autor --</option>
+                                {{#each autores}}
+                                    <option value="{{this.id}}" {{#eq this.id ../libro.autorId}}selected{{/eq}}>{{this.nombre}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="editorialId" class="form-label">
+                                <i class="bi bi-building text-emerald"></i> Editorial
+                            </label>
+                            <select class="form-select" id="editorialId" name="editorialId" required>
+                                <option value="">-- Seleccione una editorial --</option>
+                                {{#each editoriales}}
+                                    <option value="{{this.id}}" {{#eq this.id ../libro.editorialId}}selected{{/eq}}>{{this.nombre}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center pt-3 border-top border-emerald">
+                            <a href="/libros" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left me-1"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-emerald px-4">
+                                <i class="bi bi-check-lg me-1"></i> Guardar Cambios
+                            </button>
+                        </div>
+                    </form>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</div>

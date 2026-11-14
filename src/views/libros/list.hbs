@@ -1,0 +1,106 @@
+<style>
+    /* Reglas estrictas de contraste para la tabla de libros */
+    .table-container,
+    .table-container .table,
+    .table-container .table > :not(caption) > * > * {
+        background-color: #0c1812 !important;
+        box-shadow: inset 0 0 0 9999px #0c1812 !important;
+        color: #f8fafc !important;
+    }
+    .table-container .table thead th {
+        background-color: #13261d !important;
+        box-shadow: inset 0 0 0 9999px #13261d !important;
+        color: #34d399 !important;
+    }
+    .table-container .table tbody tr:hover > * {
+        background-color: #162b21 !important;
+        box-shadow: inset 0 0 0 9999px #162b21 !important;
+    }
+    .table-libro-titulo {
+        color: #ffffff !important;
+        font-weight: 700 !important;
+        font-size: 1.05rem !important;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+        display: inline-block;
+        letter-spacing: -0.01em;
+    }
+</style>
+
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-2 border-bottom border-emerald gap-3">
+    <div>
+        <h1 class="h2 fw-bold text-white mb-1">
+            <i class="bi bi-journal-bookmark-fill text-emerald me-2"></i>Mantenimiento de Libros
+        </h1>
+        <p class="text-secondary small mb-0">Gestiona, edita y registra las publicaciones en el sistema</p>
+    </div>
+    <a href="/libros/create" class="btn btn-emerald px-4 py-2">
+        <i class="bi bi-plus-circle-fill me-1"></i> Registrar Nuevo Libro
+    </a>
+</div>
+
+<div class="table-container border-emerald shadow-lg">
+    <div class="table-responsive">
+        <table class="table align-middle m-0" style="background-color: #0c1812 !important;">
+            <thead>
+                <tr>
+                    <th scope="col" style="min-width: 220px; background-color: #13261d !important; color: #34d399 !important;">Título del Libro</th>
+                    <th scope="col" class="text-center" style="width: 90px; background-color: #13261d !important; color: #34d399 !important;">Portada</th>
+                    <th scope="col" class="text-center" style="background-color: #13261d !important; color: #34d399 !important;">Año</th>
+                    <th scope="col" style="background-color: #13261d !important; color: #34d399 !important;">Categoría</th>
+                    <th scope="col" style="background-color: #13261d !important; color: #34d399 !important;">Autor</th>
+                    <th scope="col" style="background-color: #13261d !important; color: #34d399 !important;">Editorial</th>
+                    <th scope="col" class="text-center" style="min-width: 170px; background-color: #13261d !important; color: #34d399 !important;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each libros}}
+                <tr style="background-color: #0c1812 !important;">
+                    <td style="background-color: #0c1812 !important;">
+                        <span class="table-libro-titulo">
+                            <i class="bi bi-book text-emerald me-2"></i>{{this.titulo}}
+                        </span>
+                    </td>
+                    <td class="text-center" style="background-color: #0c1812 !important;">
+                        <img src="{{this.portadaUrl}}" alt="{{this.titulo}}" style="width: 48px; height: 68px; object-fit: cover;" class="rounded border border-emerald shadow-sm">
+                    </td>
+                    <td class="text-center" style="background-color: #0c1812 !important;">
+                        <span class="badge bg-dark border border-secondary text-light px-2 py-1">{{this.anoPublicacion}}</span>
+                    </td>
+                    <td style="background-color: #0c1812 !important;">
+                        <span class="badge badge-emerald px-2 py-1">{{this.Categoria.nombre}}</span>
+                    </td>
+                    <td style="background-color: #0c1812 !important;">
+                        <span class="text-light fw-medium"><i class="bi bi-person text-emerald me-1"></i>{{this.Autor.nombre}}</span>
+                    </td>
+                    <td style="background-color: #0c1812 !important;">
+                        <span class="text-light"><i class="bi bi-building text-emerald me-1"></i>{{this.Editorial.nombre}}</span>
+                    </td>
+                    <td class="text-center" style="background-color: #0c1812 !important;">
+                        <div class="d-inline-flex gap-1">
+                            <a href="/libros/edit/{{this.id}}" class="btn btn-sm btn-warning" title="Editar Libro">
+                                <i class="bi bi-pencil-fill me-1"></i> Editar
+                            </a>
+                            <a href="/libros/delete/{{this.id}}" class="btn btn-sm btn-danger" title="Eliminar Libro">
+                                <i class="bi bi-trash3-fill me-1"></i> Eliminar
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {{else}}
+                <tr style="background-color: #0c1812 !important;">
+                    <td colspan="7" class="text-center py-5" style="background-color: #0c1812 !important;">
+                        <div class="py-3">
+                            <i class="bi bi-journal-x text-emerald fs-1 d-block mb-2"></i>
+                            <h5 class="text-white fw-semibold mb-1">No hay libros registrados</h5>
+                            <p class="text-muted small mb-3">Comienza agregando el primer libro al catálogo.</p>
+                            <a href="/libros/create" class="btn btn-emerald btn-sm">
+                                <i class="bi bi-plus-lg me-1"></i> Crear primer libro
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>

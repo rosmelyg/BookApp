@@ -1,0 +1,81 @@
+<div class="row justify-content-center">
+    <div class="col-lg-10 col-md-11">
+        <div class="mb-3">
+            <a href="/" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-arrow-left me-1"></i> Volver al Catálogo
+            </a>
+        </div>
+
+        <div class="card shadow-lg border-emerald overflow-hidden">
+            <div class="row g-0">
+                <div class="col-md-5 col-lg-5 position-relative" style="background-color: #050a08;">
+                    <img src="{{libro.portadaUrl}}" class="img-fluid w-100 h-100" alt="{{libro.titulo}}" style="object-fit: cover; min-height: 440px; max-height: 560px;">
+                </div>
+                <div class="col-md-7 col-lg-7 d-flex flex-column">
+                    <div class="card-body p-4 p-lg-5 d-flex flex-column justify-content-between h-100">
+                        <div>
+                            <div class="d-flex align-items-center gap-2 mb-2">
+                                <span class="badge badge-emerald fs-6 px-3 py-1">
+                                    <i class="bi bi-tag-fill me-1"></i> {{libro.Categoria.nombre}}
+                                </span>
+                                <span class="badge bg-dark border border-secondary text-secondary">
+                                    <i class="bi bi-calendar3 me-1"></i> {{libro.anoPublicacion}}
+                                </span>
+                            </div>
+                            <h2 class="card-title fw-bold text-white mb-4 display-6">
+                                {{libro.titulo}}
+                            </h2>
+
+                            <div class="card p-3 mb-4 border-emerald" style="background-color: rgba(6, 12, 9, 0.6);">
+                                <h6 class="text-emerald text-uppercase fw-bold mb-3" style="letter-spacing: 0.05em; font-size: 0.75rem;">
+                                    <i class="bi bi-info-circle-fill me-1"></i> Ficha Técnica
+                                </h6>
+                                <div class="row g-3">
+                                    <div class="col-sm-6">
+                                        <div class="text-secondary small">Autor</div>
+                                        <div class="text-white fw-semibold fs-6">
+                                            <i class="bi bi-person-fill text-emerald me-1"></i> {{libro.Autor.nombre}}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="text-secondary small">Año de Publicación</div>
+                                        <div class="text-white fw-semibold fs-6">
+                                            <i class="bi bi-calendar-event text-emerald me-1"></i> {{libro.anoPublicacion}}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="text-secondary small">Editorial</div>
+                                        <div class="text-white fw-semibold fs-6">
+                                            <i class="bi bi-building text-emerald me-1"></i> {{libro.Editorial.nombre}}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="text-secondary small">País de Editorial</div>
+                                        <div class="text-white fw-semibold fs-6">
+                                            <i class="bi bi-globe-americas text-emerald me-1"></i> {{libro.Editorial.pais}}
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="text-secondary small">Contacto Editorial</div>
+                                        <div class="text-white fw-semibold fs-6">
+                                            <i class="bi bi-telephone-fill text-emerald me-1"></i> {{libro.Editorial.telefono}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-3 border-top border-emerald d-flex justify-content-between align-items-center">
+                            <a href="/" class="btn btn-secondary px-4">
+                                <i class="bi bi-arrow-left me-1"></i> Volver al Catálogo
+                            </a>
+                            <a href="/libros/edit/{{libro.id}}" class="btn btn-warning px-3">
+                                <i class="bi bi-pencil-square me-1"></i> Editar Libro
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

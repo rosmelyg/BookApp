@@ -1,0 +1,96 @@
+<style>
+    /* Reglas estrictas de contraste para la tabla de categorías */
+    .table-container,
+    .table-container .table,
+    .table-container .table > :not(caption) > * > * {
+        background-color: #0c1812 !important;
+        box-shadow: inset 0 0 0 9999px #0c1812 !important;
+        color: #f8fafc !important;
+    }
+    .table-container .table thead th {
+        background-color: #13261d !important;
+        box-shadow: inset 0 0 0 9999px #13261d !important;
+        color: #34d399 !important;
+    }
+    .table-container .table tbody tr:hover > * {
+        background-color: #162b21 !important;
+        box-shadow: inset 0 0 0 9999px #162b21 !important;
+    }
+    .table-categoria-nombre {
+        color: #ffffff !important;
+        font-weight: 700 !important;
+        font-size: 1.05rem !important;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+        display: inline-block;
+        letter-spacing: -0.01em;
+    }
+</style>
+
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-2 border-bottom border-emerald gap-3">
+    <div>
+        <h1 class="h2 fw-bold text-white mb-1">
+            <i class="bi bi-tags-fill text-emerald me-2"></i>Mantenimiento de Categorías
+        </h1>
+        <p class="text-secondary small mb-0">Administra los géneros y categorías temáticas de los libros</p>
+    </div>
+    <a href="/categorias/create" class="btn btn-emerald px-4 py-2">
+        <i class="bi bi-plus-circle-fill me-1"></i> Nueva Categoría
+    </a>
+</div>
+
+<div class="table-container border-emerald shadow-lg">
+    <div class="table-responsive">
+        <table class="table align-middle m-0" style="background-color: #0c1812 !important;">
+            <thead>
+                <tr>
+                    <th scope="col" style="min-width: 220px; background-color: #13261d !important; color: #34d399 !important;">Nombre de la Categoría</th>
+                    <th scope="col" style="background-color: #13261d !important; color: #34d399 !important;">Descripción</th>
+                    <th scope="col" class="text-center" style="width: 220px; background-color: #13261d !important; color: #34d399 !important;">Libros Asociados</th>
+                    <th scope="col" class="text-center" style="min-width: 170px; background-color: #13261d !important; color: #34d399 !important;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each categorias}}
+                <tr style="background-color: #0c1812 !important;">
+                    <td style="background-color: #0c1812 !important;">
+                        <span class="table-categoria-nombre">
+                            <i class="bi bi-tag text-emerald me-2"></i>{{this.nombre}}
+                        </span>
+                    </td>
+                    <td style="background-color: #0c1812 !important;">
+                        <span class="text-light">{{this.descripcion}}</span>
+                    </td>
+                    <td class="text-center" style="background-color: #0c1812 !important;">
+                        <span class="badge badge-emerald fs-6 px-3 py-1">
+                            <i class="bi bi-book me-1"></i>{{this.cantidadLibros}}
+                        </span>
+                    </td>
+                    <td class="text-center" style="background-color: #0c1812 !important;">
+                        <div class="d-inline-flex gap-1">
+                            <a href="/categorias/edit/{{this.id}}" class="btn btn-sm btn-warning" title="Editar Categoría">
+                                <i class="bi bi-pencil-fill me-1"></i> Editar
+                            </a>
+                            <a href="/categorias/delete/{{this.id}}" class="btn btn-sm btn-danger" title="Eliminar Categoría">
+                                <i class="bi bi-trash3-fill me-1"></i> Eliminar
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {{else}}
+                <tr style="background-color: #0c1812 !important;">
+                    <td colspan="4" class="text-center py-5" style="background-color: #0c1812 !important;">
+                        <div class="py-3">
+                            <i class="bi bi-tags text-emerald fs-1 d-block mb-2"></i>
+                            <h5 class="text-white fw-semibold mb-1">No hay categorías registradas</h5>
+                            <p class="text-muted small mb-3">Comienza creando una nueva categoría temática.</p>
+                            <a href="/categorias/create" class="btn btn-emerald btn-sm">
+                                <i class="bi bi-plus-lg me-1"></i> Crear primera categoría
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
