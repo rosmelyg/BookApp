@@ -35,7 +35,7 @@ El proyecto sigue estrictamente el patrón **MVC**:
 
 Sigue estos pasos para levantar el proyecto en tu máquina local:
 
-1. **Clonar el repositorio:**
+1. **Clonar el repositorio**
 
 2. **Instalar las dependencias:**
    npm install
