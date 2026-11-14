@@ -36,8 +36,6 @@ El proyecto sigue estrictamente el patrón **MVC**:
 Sigue estos pasos para levantar el proyecto en tu máquina local:
 
 1. **Clonar el repositorio:**
-   git clone [https://github.com/tu-usuario/bookapp.git](https://github.com/tu-usuario/bookapp.git)
-   cd bookapp
 
 2. **Instalar las dependencias:**
    npm install
